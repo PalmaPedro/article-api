@@ -8,4 +8,5 @@ public interface ArticleService {
     Optional<Article> getArticle(Integer id);
     List<Article> getAllArticles();
     Optional<Article> updateArticle(int id, ArticleRequestDto articleRequestDto);
+    boolean deleteArticle(int id);
 }

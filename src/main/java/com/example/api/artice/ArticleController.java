@@ -67,6 +67,17 @@ public class ArticleController {
         return dtoMapper.toDto(updatedArticle);
     }
 
+    @Operation(summary = "Delete an article", description = "Deletes an article by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "successful operation")
+    })
+    @DeleteMapping("/{id}")
+    public void deleteArticle(@PathVariable int id) {
+        if (!articleService.deleteArticle(id)) {
+            throw new ResourceNotFoundException("Article not found with ID: " + id);
+        }
+    }
+
 
 
 

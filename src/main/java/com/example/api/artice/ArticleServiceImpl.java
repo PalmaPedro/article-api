@@ -26,7 +26,6 @@ public class ArticleServiceImpl implements ArticleService{
         }
 
         articles.add(article);
-        // Notify about the created article
         notificationService.sendNotification("Article created: " + article.getDescription());
 
         return article;
@@ -58,5 +57,14 @@ public class ArticleServiceImpl implements ArticleService{
 
                     return existingArticle;
                 });
+    }
+
+    @Override
+    public boolean deleteArticle(int id) {
+        boolean removed = articles.removeIf(article -> article.getId() == id);
+        if (removed) {
+            notificationService.sendNotification("Article deleted with ID: " + id);
+        }
+        return removed;
     }
 }
