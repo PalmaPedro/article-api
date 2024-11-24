@@ -56,6 +56,17 @@ public class ArticleController {
                 .toList();
     }
 
+    @Operation(summary = "Update an article", description = "Updates an article by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "successful operation")
+    })
+    @PutMapping("/{id}")
+    public ArticleResponseDto updateArticle(@PathVariable int id, @RequestBody ArticleRequestDto articleRequestDto) {
+        Article updatedArticle = articleService.updateArticle(id, articleRequestDto)
+                .orElseThrow(() -> new ResourceNotFoundException("Article not found with ID: " + id));
+        return dtoMapper.toDto(updatedArticle);
+    }
+
 
 
 

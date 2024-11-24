@@ -43,4 +43,20 @@ public class ArticleServiceImpl implements ArticleService{
     public List<Article> getAllArticles() {
         return articles;
     }
+
+    @Override
+    public Optional<Article> updateArticle(int id, ArticleRequestDto dto) {
+        return articles.stream()
+                .filter(article -> article.getId() == id)
+                .findFirst()
+                .map(existingArticle -> {
+                    existingArticle.setDescription(dto.description());
+                    existingArticle.setWeight(dto.weight());
+                    existingArticle.setVolume(dto.volume());
+
+                    notificationService.sendNotification("Article updated: " + existingArticle.getDescription());
+
+                    return existingArticle;
+                });
+    }
 }

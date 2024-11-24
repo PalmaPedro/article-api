@@ -7,4 +7,5 @@ public interface ArticleService {
     Article createArticle(Article article);
     Optional<Article> getArticle(Integer id);
     List<Article> getAllArticles();
+    Optional<Article> updateArticle(int id, ArticleRequestDto articleRequestDto);
 }

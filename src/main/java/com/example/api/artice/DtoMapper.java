@@ -17,9 +17,4 @@ public class DtoMapper {
         return new ArticleResponseDto(article.getId(), article.getDescription(), article.getWeight(), article.getVolume());
     }
 
-    public void updateEntity(Article existingArticle, ArticleRequestDto dto) {
-        existingArticle.setDescription(dto.description());
-        existingArticle.setWeight(dto.weight());
-        existingArticle.setVolume(dto.volume());
-    }
 }
