@@ -1,4 +1,4 @@
-package com.example.api.artice;
+package com.example.api.article;
 import org.springframework.stereotype.Component;
 
 @Component
