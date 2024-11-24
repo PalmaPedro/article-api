@@ -1,10 +1,12 @@
 package com.example.api.artice;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Article {
@@ -12,4 +14,5 @@ public class Article {
     private String description;
     private double weight;
     private double volume;
+
 }
