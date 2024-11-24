@@ -5,6 +5,7 @@ import com.example.api.utility.NotificationService;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArticleServiceImpl implements ArticleService{
@@ -25,10 +26,21 @@ public class ArticleServiceImpl implements ArticleService{
         }
 
         articles.add(article);
-
         // Notify about the created article
         notificationService.sendNotification("Article created: " + article.getDescription());
 
         return article;
+    }
+
+    @Override
+    public Optional<Article> getArticle(Integer id) {
+        return articles.stream()
+                .filter(article -> article.getId() == id)
+                .findFirst();
+    }
+
+    @Override
+    public List<Article> getAllArticles() {
+        return articles;
     }
 }
