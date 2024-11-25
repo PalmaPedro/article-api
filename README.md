@@ -49,7 +49,9 @@ Ensure you have the following installed:
    ```bash
    http://localhost:8080/swagger-ui/index.html
 
-You should be able to see
+You should be able to see this:
+
+![Swagger UI](docs/swagger-ui.png)
 
 
 
