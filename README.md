@@ -27,12 +27,16 @@ Ensure you have the following installed:
 1. Open a terminal and clone the repository:
    ```bash
    git clone https://github.com/PalmaPedro/article-api
-   cd artice-api
-
+2. Go into the project directory
+    ```bash
+   cd article-api
+    
 ### **Build the project**
-1. Open a terminal (runs on PORT 8080 by default):
+1. Open a terminal and type to build (runs on PORT 8080 by default):
    ```bash
    mvn clean install
+2. And run:
+   ```bash
    mvn spring-boot:run
 
 ### **Using Maven profiles**
