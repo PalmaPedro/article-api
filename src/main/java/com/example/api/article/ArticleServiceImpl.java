@@ -19,21 +19,14 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public Article createArticle(Article article) {
+        validateArticle(article.getDescription(), article.getWeight(), article.getVolume());
+
         if (articleRepository.existsByDescription(article.getDescription())) {
             throw new DuplicateResourceException("An article with the description '" + article.getDescription() + "' already exists.");
         }
-        if (article.getDescription() == null || article.getDescription().trim().isEmpty()) {
-            throw new BadRequestException("Description must not be empty");
-        }
-        if (article.getWeight() <= 0) {
-            throw new BadRequestException("Weight must be greater than 0.0");
-        }
-        if (article.getVolume() <= 0) {
-            throw new BadRequestException("Volume must be greater than 0.0");
-        }
 
         Article saved = articleRepository.save(article);
-        notificationService.sendNotification("Article created: " + saved.getDescription());
+        notificationService.sendNotification("Article created: [%s]".formatted(saved.getDescription()));
         return saved;
     }
 
@@ -50,9 +43,10 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public Article updateArticle(int id, ArticleRequestDto dto) {
+        validateArticle(dto.description(), dto.weight(), dto.volume());
         return articleRepository.findById(id)
                 .map(existingArticle -> updateExistingArticle(existingArticle, dto))
-                .orElseThrow(() -> new ResourceNotFoundException("Article with id [%s] not found".formatted(id)));
+                .orElseThrow(() -> new ResourceNotFoundException("Article not updated. Id [%s] not found".formatted(id)));
     }
 
     private Article updateExistingArticle(Article existingArticle, ArticleRequestDto dto) {
@@ -66,8 +60,20 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public void deleteArticle(int id) {
         if (!articleRepository.deleteById(id)) {
-            throw new ResourceNotFoundException("Article with id [%s] not found".formatted(id));
+            throw new ResourceNotFoundException("Article not deleted. Id [%s] not found".formatted(id));
         }
         notificationService.sendNotification("Article deleted with ID: [%s] ".formatted(id));
+    }
+
+    private void validateArticle(String description, double weight, double volume) {
+        if (description == null || description.trim().isEmpty()) {
+            throw new BadRequestException("Description must not be empty");
+        }
+        if (weight <= 0) {
+            throw new BadRequestException("Weight must be greater than 0.0");
+        }
+        if (volume <= 0) {
+            throw new BadRequestException("Volume must be greater than 0.0");
+        }
     }
 }
